@@ -21,10 +21,14 @@ class Welcome : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTheme(true) {
+            MyTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    WelcomeBackground {
+                    MySootheBackground(
+                        lightImage = R.drawable.light_welcome,
+                        darkImage = R.drawable.dark_welcome,
+                        contentDescription = "Welcome Background"
+                    ) {
                         WelcomeContent()
                     }
                 }
@@ -34,14 +38,19 @@ class Welcome : ComponentActivity() {
 }
 
 @Composable
-fun WelcomeBackground(content: @Composable () -> Unit) {
+fun MySootheBackground(
+    lightImage: Int,
+    darkImage: Int,
+    contentDescription: String,
+    content: @Composable () -> Unit
+) {
     val isDarkMode = !MaterialTheme.colors.isLight
     Box {
         CoilImage(
-            data = if (isDarkMode) R.drawable.dark_welcome else R.drawable.light_welcome,
+            data = if (isDarkMode) darkImage else lightImage,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds,
-            contentDescription = "Welcome Background"
+            contentDescription = contentDescription
         )
         content()
     }
@@ -50,13 +59,7 @@ fun WelcomeBackground(content: @Composable () -> Unit) {
 @Composable
 fun WelcomeContent() {
     val isDarkMode = !MaterialTheme.colors.isLight
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    CenteredColumn {
         Image(
             painter = painterResource(id = if (isDarkMode) R.drawable.dark_logo else R.drawable.light_logo),
             modifier = Modifier
@@ -76,6 +79,19 @@ fun WelcomeContent() {
             label = "LOG IN",
             bgColor = MaterialTheme.colors.secondary
         )
+    }
+}
+
+@Composable
+fun CenteredColumn(content: @Composable () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        content()
     }
 }
 
