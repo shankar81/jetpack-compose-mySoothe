@@ -43,8 +43,11 @@ fun LoginContent() {
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier.padding(bottom = 24.dp)
         )
-        LoginInput(placeholder = "Email address")
-        LoginInput(placeholder = "Password", visualTransformation = PasswordVisualTransformation())
+        MySootheInput(placeholder = "Email address")
+        MySootheInput(
+            placeholder = "Password",
+            visualTransformation = PasswordVisualTransformation()
+        )
         MySoothButton(
             modifier = Modifier.padding(bottom = 16.dp),
             onClick = {},
@@ -60,10 +63,11 @@ fun LoginContent() {
 }
 
 @Composable
-fun LoginInput(
+fun MySootheInput(
     modifier: Modifier = Modifier,
     placeholder: String,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    leadingIcon: (@Composable () -> Unit)? = null
 ) {
     TextField(
         modifier = modifier
@@ -74,7 +78,7 @@ fun LoginInput(
         placeholder = {
             Text(
                 text = placeholder,
-                style = MaterialTheme.typography.body1,
+//                style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface
             )
         },
@@ -83,6 +87,7 @@ fun LoginInput(
             backgroundColor = MaterialTheme.colors.surface
         ),
         visualTransformation = visualTransformation,
+        leadingIcon = leadingIcon
     )
 }
 

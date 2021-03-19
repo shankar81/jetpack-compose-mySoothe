@@ -56,7 +56,8 @@ val typography = Typography(
     body1 = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 14.sp,
+        lineHeight = 13.sp
     ),
     button = TextStyle(
         fontFamily = Lato,
