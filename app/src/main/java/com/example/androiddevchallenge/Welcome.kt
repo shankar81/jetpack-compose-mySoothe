@@ -1,8 +1,5 @@
 package com.example.androiddevchallenge
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,25 +11,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
 
-class Welcome : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    MySootheBackground(
-                        lightImage = R.drawable.light_welcome,
-                        darkImage = R.drawable.dark_welcome,
-                        contentDescription = "Welcome Background"
-                    ) {
-                        WelcomeContent()
-                    }
-                }
-            }
+@Composable
+fun Welcome(navController: NavHostController) {
+    // A surface container using the 'background' color from the theme
+    Surface(color = MaterialTheme.colors.background) {
+        MySootheBackground(
+            lightImage = R.drawable.light_welcome,
+            darkImage = R.drawable.dark_welcome,
+            contentDescription = "Welcome Background"
+        ) {
+            WelcomeContent(navController)
         }
     }
 }
@@ -57,7 +50,7 @@ fun MySootheBackground(
 }
 
 @Composable
-fun WelcomeContent() {
+fun WelcomeContent(navController: NavHostController) {
     val isDarkMode = !MaterialTheme.colors.isLight
     CenteredColumn {
         Image(
@@ -70,12 +63,12 @@ fun WelcomeContent() {
         )
         MySoothButton(
             modifier = Modifier.padding(bottom = 8.dp),
-            onClick = { },
+            onClick = { navController.navigate("Login") },
             label = "SIGN UP",
             bgColor = MaterialTheme.colors.primary
         )
         MySoothButton(
-            onClick = { },
+            onClick = { navController.navigate("Login") },
             label = "LOG IN",
             bgColor = MaterialTheme.colors.secondary
         )
@@ -116,12 +109,4 @@ fun MySoothButton(
         )
     }
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyTheme {
-        WelcomeContent()
-    }
 }

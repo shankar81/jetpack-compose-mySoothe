@@ -1,8 +1,5 @@
 package com.example.androiddevchallenge
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -12,30 +9,25 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.androiddevchallenge.ui.theme.MyTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 
-class Login : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    MySootheBackground(
-                        lightImage = R.drawable.light_login,
-                        darkImage = R.drawable.dark_login,
-                        contentDescription = "Login Background"
-                    ) {
-                        LoginContent()
-                    }
-                }
-            }
+@Composable
+fun Login(navController: NavHostController) {
+    // A surface container using the 'background' color from the theme
+    Surface(color = MaterialTheme.colors.background) {
+        MySootheBackground(
+            lightImage = R.drawable.light_login,
+            darkImage = R.drawable.dark_login,
+            contentDescription = "Login Background"
+        ) {
+            LoginContent(navController)
         }
     }
 }
 
 @Composable
-fun LoginContent() {
+fun LoginContent(navController: NavHostController) {
     CenteredColumn {
         Text(
             text = "LOG IN",
@@ -50,7 +42,7 @@ fun LoginContent() {
         )
         MySoothButton(
             modifier = Modifier.padding(bottom = 16.dp),
-            onClick = {},
+            onClick = { navController.navigate("Home") },
             label = "LOG IN",
             bgColor = MaterialTheme.colors.primary
         )
@@ -78,7 +70,6 @@ fun MySootheInput(
         placeholder = {
             Text(
                 text = placeholder,
-//                style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface
             )
         },
@@ -89,16 +80,4 @@ fun MySootheInput(
         visualTransformation = visualTransformation,
         leadingIcon = leadingIcon
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview2() {
-    MySootheBackground(
-        lightImage = R.drawable.light_login,
-        darkImage = R.drawable.dark_login,
-        contentDescription = "Login Background"
-    ) {
-        LoginContent()
-    }
 }

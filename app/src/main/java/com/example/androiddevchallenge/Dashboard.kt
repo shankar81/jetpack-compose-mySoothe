@@ -1,8 +1,5 @@
 package com.example.androiddevchallenge
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -20,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
 
@@ -51,34 +49,30 @@ val minds = listOf(
     Item(R.drawable.body12, "High stress"),
 )
 
-class Dashboard : ComponentActivity() {
-    @ExperimentalFoundationApi
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme(true) {
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = {},
-                            backgroundColor = MaterialTheme.colors.primary
-                        ) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.play_arrow),
-                                contentDescription = null,
-                                tint = MaterialTheme.colors.onPrimary,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-                    },
-                    floatingActionButtonPosition = FabPosition.Center
-                ) {
-                    // A surface container using the 'background' color from the theme
-                    Surface(color = MaterialTheme.colors.background) {
-                        DashboardContent()
-                    }
-                }
+@Composable
+@ExperimentalFoundationApi
+fun Dashboard(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNav(navController = navController) },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {},
+                backgroundColor = MaterialTheme.colors.primary
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.play_arrow),
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier.size(24.dp)
+                )
             }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true
+    ) {
+        // A surface container using the 'background' color from the theme
+        Surface(color = MaterialTheme.colors.background) {
+            DashboardContent()
         }
     }
 }
@@ -90,6 +84,7 @@ fun DashboardContent() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .padding(top = 56.dp)
     ) {
         MySootheInput(
             modifier = Modifier.padding(bottom = 24.dp),
